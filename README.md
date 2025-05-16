@@ -73,8 +73,11 @@ Instalar todas las dependencias
 composer install 
 ````
 
-Correr migraciones 
+Correr migraciones
+```` 
 php artisan migrate 
-
+````
 correr servidor
+````
 php artisan serve
+````
