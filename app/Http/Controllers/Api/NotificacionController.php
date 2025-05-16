@@ -13,9 +13,17 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use App\Services\TcpNotificacionService;
 
 class NotificacionController extends Controller
 {
+    protected $tcpService;
+
+    public function __construct(TcpNotificacionService $tcpService)
+    {
+        $this->tcpService = $tcpService;
+    }
+
     public function index()
     {
         return Notificacion::where('usuario_id', Auth::id())->latest()->get();
@@ -66,13 +74,6 @@ class NotificacionController extends Controller
             $rutaAdjunto = storage_path('app/' . $rutaAdjunto);
         }
 
-        Notification::route('mail', $request->destinatario)
-            ->notify(new NotificacionCorreo(
-                $request->asunto,
-                $request->mensaje,
-                $rutaAdjunto
-            ));
-
         CorreoEnviado::create([
             'destinatario' => $request->destinatario,
             'asunto' => $request->asunto,
@@ -81,7 +82,8 @@ class NotificacionController extends Controller
             'path' => $rutaAdjunto ?? '',
         ]);
 
-
+        $this->tcpService->enviarDatosTcp($request->destinatario, $request->asunto, $request->mensaje);
         return response()->json(['mensaje' => 'Notificación enviada correctamente.']);
     }
+
 }

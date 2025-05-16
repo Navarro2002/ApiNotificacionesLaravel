@@ -61,3 +61,20 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # ApiNotificacionesLaravel
 git 
+
+## Guía de instalación
+Como primer paso se debe realizar la copia del archivo **".env.example"** a **".env"** y configurar las variables de entorno que se van a ocupar, como por ejemplo la conexion a la base de datos, la copia del archivo se puede realizar ejecutando el siguiente comando:
+````
+cp .env.example .env;
+````
+
+Instalar todas las dependencias 
+````
+composer install 
+````
+
+Correr migraciones 
+php artisan migrate 
+
+correr servidor
+php artisan serve

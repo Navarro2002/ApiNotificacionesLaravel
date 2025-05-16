@@ -10,3 +10,5 @@ Route::get('/user', function (Request $request) {
 
 
 Route::post('/notificaciones/enviar-correo', [NotificacionController::class, 'enviarPorCorreo']);
+
+Route::get('/test-tcp', [NotificacionController::class, 'enviarDatosTcp']);
